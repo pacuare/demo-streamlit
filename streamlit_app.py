@@ -6,7 +6,7 @@ db = pacuare.Client(st.secrets["PACUARE_API_KEY"])
 def get_data(id):
   sql = "select injuries, turtle_occurrences from unique_turtles where turtle_id = $1"
   params = [id]
-  if id == '':
+  if id == '' or id is None:
     sql = "select injuries, turtle_occurrences from unique_turtles"
     params = []
   return (
