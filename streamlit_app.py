@@ -14,7 +14,7 @@ def get_data():
     )
   )
 
-st.title("🎈 Pacuare Demo")
+st.title("🎈 Pacuare API Demo")
 st.write(
     "See below a scatter plot of turtle occurrences vs. injuries."
 )
