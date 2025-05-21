@@ -1,7 +1,11 @@
 import streamlit as st
 import pacuare
+from dotenv import load_dotenv
+import os
 
-db = pacuare.Client(st.secrets['PACUARE_API_KEY'])
+load_dotenv()
+
+db = pacuare.Client(os.getenv("PACUARE_API_KEY"))
 
 def get_data():
   return (
