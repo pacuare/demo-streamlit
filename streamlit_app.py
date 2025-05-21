@@ -3,7 +3,7 @@ import pacuare
 
 db = pacuare.Client(st.secrets["PACUARE_API_KEY"])
 
-def get_data():
+def get_data(id):
   sql = "select injuries, turtle_occurrences from unique_turtles where turtle_id = $1"
   params = [id]
   if id == '':
