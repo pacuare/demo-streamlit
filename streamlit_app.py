@@ -1,18 +1,23 @@
 import streamlit as st
 import pacuare
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
-
-db = pacuare.Client(os.getenv("PACUARE_API_KEY"))
+db = pacuare.Client(st.secrets["PACUARE_API_KEY"])
 
 def get_data():
+  sql = "select injuries, turtle_occurrences from unique_turtles where turtle_id = $1"
+  params = [id]
+  if id == '':
+    sql = "select injuries, turtle_occurrences from unique_turtles"
+    params = []
   return (
-    db
-    .query("select injuries, turtle_occurrences from unique_turtles")
+    db.query(sql, params)
     .apply(
-      lambda row: {**row, 'n_injuries': len(row['injuries'].split(','))},
+      lambda row: {
+        **row, 
+        'n_injuries': len(
+          [injury for injury in row['injuries'] if injury.strip() != '']
+        )
+      },
       axis=1,
       result_type='expand'
     )
@@ -23,8 +28,10 @@ st.write(
     "See below a scatter plot of turtle occurrences vs. injuries."
 )
 
+turtle_id = st.text_input("Turtle ID")
+
 st.scatter_chart(
-  data=get_data(),
+  data=get_data(turtle_id),
   x='turtle_occurrences',
   y='n_injuries'
 )
