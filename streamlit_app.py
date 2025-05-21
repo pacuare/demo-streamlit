@@ -15,7 +15,7 @@ def get_data(id):
       lambda row: {
         **row, 
         'n_injuries': len(
-          [injury for injury in row['injuries'] if injury.strip() != '']
+          [injury for injury in row['injuries'].split(',') if injury.strip() != '']
         )
       },
       axis=1,
