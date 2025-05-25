@@ -1,2 +1,2 @@
 streamlit
-pacuare >= 0.2.0
+pacuare >= 0.3.1
